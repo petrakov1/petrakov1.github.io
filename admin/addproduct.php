@@ -15,7 +15,7 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link href="style.css" rel="stylesheet">
-	<link href="../css/fonts/stylesheet.css" rel="stylesheet">
+	<link href="fonts/stylesheet.css" rel="stylesheet">
 
     <script src="../js/jquery-2.1.4.min.js"></script>
       <script src="ckeditor/ckeditor.js"></script>
@@ -53,7 +53,7 @@
                 </div><div class="input-row">
                 <label>Категория</label>
 
-                <select name="category" required>
+                <select name="category" >
                     <?php
                      include '../connect.php';
                         $sql = "SELECT * FROM categories WHERE level=1";

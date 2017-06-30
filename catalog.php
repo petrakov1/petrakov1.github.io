@@ -21,71 +21,50 @@
 
 <section class="wrap">
     <div id="products">
-        <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
-         <div class="item">
-            <img src="css/images/product.jpg" alt="">
-            <h3>T-shirt</h3>
-            <p>1400 P</p>
-        </div>
+
+           <?php
+
+                include "connect.php";
+                $sql = "SELECT * FROM products ORDER BY `date` DESC";
+         
+         
+        
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $price = (int)$row["price"] - (int)$row["discount"];
+                        echo '
+                        
+                           <div class="item">
+            
+                        <a href="product.php?id='.$row["idProduct"].'">';
+                        $sql1 = "SELECT name FROM images WHERE idProduct=".$row["idProduct"]." LIMIT 1";
+                        $result1 = $conn->query($sql1);
+                        if ($result1->num_rows > 0) {
+                            while($row1 = $result1->fetch_assoc()) {
+                                echo '<img src="images/product/'.$row["idProduct"].'/MQ/'.$row1["name"].'" alt="">';
+
+
+                            }
+                        }
+                    echo '
+                        <h3>'.$row["title"].'</h3>
+
+                  
+                          <p>'.number_format($price,0,"","").' P</p>
+                     </a>
+                      </div>';
+
+                 }
+                }
+
+
+
+
+                $conn->close();
+              ?>
+     
+        
 
     </div>
 

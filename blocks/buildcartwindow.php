@@ -1,5 +1,13 @@
 
-    
+      <div class="flex">
+            <p>Корзина</p>
+            <img src="css/images/close.png" alt="" id="cart-button" class="cart-button">
+        </div>
+        <div class="items">
+         
+                  
+     
+       
 <?php
 
                     include '../connect.php';
@@ -10,14 +18,6 @@
 if($_COOKIE["cart_number"]>0)
 {
 
-// if($_COOKIE["cart_number"]>3)
-// {
-//     echo '<div id="cart-scroll" class="scroll">';
-// }
-// else {
-//     echo '<div id="cart-scroll" class="">';
-
-// }
 
                     for($i=1;$i<=$_COOKIE["cart_number"];$i++)
                     {
@@ -43,32 +43,49 @@ if($_COOKIE["cart_number"]>0)
                         $result1 = $conn->query($sql1);
                         if ($result1->num_rows > 0) {
                             $row1 = $result1->fetch_assoc();
-                                echo '<img class="thumb" src="images/product/'.$id.'/MQ/'.$row1["name"].'" alt="">';
+                                echo '<img class="" src="images/product/'.$id.'/MQ/'.$row1["name"].'" alt="">';
 
                         }
                         
 
-                        echo '    <p class="text">'.$row["title"].'</p>
-                            <div>
-            <p class="number-minus" onclick="add_qty_ajax('.$oid.',-1)">-</p>
-            <input type="text" class="number" id="n'.$oid.'" value="'.$item["number"].'">
-            <p class="number-plus" onclick="add_qty_ajax('.$oid.',1)">+</p>
-          </div>
-                           
-                            <p class="price"><span id="sum'.$oid.'" >'.$sum.'</span> руб.</p>
-                            <img onclick="remove_product('.$oid.');" class="remove icon" src="css/images/close.png" alt="">
-                               </item>
+                        echo ' 
+                        
+                            <div> 
+                                <div class="flex"> 
+                                 <div>
+                                        <p class="heading">'.$row["title"].'</p>
+                                         <p class="price" id="sum'.$oid.'">
+                                    '.$sum.' ₽
+                                 </p>
+                                 </div>
+                                        <img src="css/images/close.png" alt="" onclick="remove_product('.$oid.');" class="remove">
+                                    
+                                 </div>
+                                 <div class="desc">
+                                     '.$row["description"].'
+                                 </div>
+
+                                 <p class="size">Размер: '.$item["size"].'</p>
+                                 <p class="q">Кол-во:</p>
+                                  <div class="quantity noselect">
+                                  
+                    <p class="number" onclick="add_qty_ajax('.$oid.',-1);" data-number="-1">-</p>
+                    <p id="n'.$oid.'">'.$item["number"].'</p>
+                    <p class="number" onclick="add_qty_ajax('.$oid.',1);" data-number="1">+</p>
+                </div>
+                                 
+                                
+                            </div>
+                            <div class="line"></div>
+                            
+            </item>
+                        
+                          
                                 ';
                                 // }
                             }
                     }
-                    echo ' <div class="totals">
-        <div class="flex">
-          <p>кол-во = <span id="">'.$quantity.' шт.</span></p>
-          <p>итого = <b><span id="tot"> '.$allsum.'  </span>руб.</b></p>
-        </div>
-        <p class="button-yellow">Купить</p>
-      </div>';
+        
 
 
 }
@@ -83,7 +100,12 @@ else {
                 ?>
 
 
+   </div>
+        <div class="flex">
+            <a class="button" href="checkout.php">оформить</a>
+                    <p>Итого: <span id="tot"><?php echo $allsum; ?></span></p>
 
+        </div>
 <script>
 
 console.log("<?php echo $allsum ?>");

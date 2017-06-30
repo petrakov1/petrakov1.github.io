@@ -14,7 +14,7 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link href="style.css" rel="stylesheet">
-	<link href="../css/fonts/stylesheet.css" rel="stylesheet">
+	<link href="fonts/stylesheet.css" rel="stylesheet">
 
     <script src="../js/jquery-2.1.4.min.js"></script>
       <script src="ckeditor/ckeditor.js"></script>
@@ -28,16 +28,7 @@
 <body>
 
     <?php include "menu.php" ?>
-
-   <div id="content">
-       <div id="nav">
-
-           <a href="products.php">Назад</a>
-
-
-       </div>
-        <form method="post" enctype="multipart/form-data" class="" id="form">
-             <?php
+   <?php
                      include '../connect.php';
                     $id= $_REQUEST["id"];
                     $sql = "SELECT * FROM products WHERE idProduct='$id'";
@@ -48,6 +39,15 @@
                     }
              $conn->close();
             ?>
+   <div id="content">
+       <div id="nav">
+        <h1><?php echo str_replace(array("\r", "\n"), '',$row["title"]); ?></h1>
+           <a href="products.php">Назад</a>
+
+
+       </div>
+        <form method="post" enctype="multipart/form-data" class="" id="form">
+          
              <div class="input-row">
             <label>Название</label>
             <input class="" type="text" placeholder="title" name="title" id="title" required>
@@ -55,7 +55,8 @@
             <label>Цена</label>
             <input class="" type="text" placeholder="100" name="price" id="price" required>
 
-              </div><div class="input-row">
+              </div>
+              <!--<div class="input-row">
             <label>Категория</label>
 
             <select name="category" id="category" required>
@@ -92,7 +93,7 @@
                 ?>
 
             </select>
-              </div>
+              </div>-->
               <!--<div class="input-row">
                    <label>Цвета</label>
                    <input type="text" placeholder="цвет" class="option" id="option-color-title">

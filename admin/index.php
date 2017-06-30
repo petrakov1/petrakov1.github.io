@@ -38,7 +38,7 @@ header('Location: products.php'); // Redirecting To Home Page
     <!--    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
     <script src="ckeditor/ckeditor.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link href="../css/fonts/stylesheet.css" rel="stylesheet">
+    <link href="fonts/stylesheet.css" rel="stylesheet">
 
     <script src="../js/jquery-2.1.4.min.js"></script>
     <!--[if lt IE 10]>

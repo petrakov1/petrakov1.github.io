@@ -94,6 +94,8 @@ function changenum(i) {
 }
 
 
+
+
 $(document).ready(function () {
 
  $(".cart-button").click(function () {

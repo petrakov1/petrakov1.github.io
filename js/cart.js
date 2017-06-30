@@ -28,20 +28,25 @@ function getprice() {
 
 function updateprice() {
     var price = getprice();
-    // document.getElementById("del-total").innerHTML = price + " ₽";
-    // console.log(price);
-    // document.getElementById("pay-total").innerHTML = price;
-    // $("#pay-pal-total").attr("value", price);
-    if ( document.getElementById("pay-total1")!=null)
+
+    if ( document.getElementById("total")!=null)
 {
-    document.getElementById("pay-total1").innerHTML = price;
+    var s= price + parseInt(getCookie("cart_delivery_price"));
+    document.getElementById("total").innerHTML = s + " ₽";
 
 }
-    // document.getElementById("pay-total2").innerHTML = price;
-    if ($("#pay-yandex-total")!=null){
-    $("#pay-yandex-total").attr("value", price);
+if ( document.getElementById("sub-total")!=null)
+{
+    document.getElementById("sub-total").innerHTML = price + " ₽";
 
-    }
+}
+
+if ( document.getElementById("del-total")!=null)
+{
+    document.getElementById("del-total").innerHTML = getCookie("cart_delivery_price") + " ₽";
+
+}
+
 }
 
 var numn = "cart_number";
@@ -139,7 +144,7 @@ function add_qty(o_id, num) {
 
 function add_qty_ajax(p_id, num) {
 
-    var n = parseInt(document.getElementById("n" + p_id).value);
+    var n = parseInt(document.getElementById("n" + p_id).innerHTML);
     var sum = parseInt(document.getElementById("sum" + p_id).innerHTML);
     var total = parseInt(document.getElementById("tot").innerHTML);
     total = total - sum;
@@ -157,19 +162,19 @@ function add_qty_ajax(p_id, num) {
         if (cart[i].o_id == p_id) {
             if (n > 0) {
 
-                console.log("n", n);
+                // console.log("n", n);
                 cart[i].number = parseInt(cart[i].number) + parseInt(num);
 
                 cart = JSON.stringify(cart);
                 cart = cart.slice(0, -1);
                 setCookie(cartn, cart, 7);
-                updatecartwindow();
-                updatecart();
-                document.getElementById("n" + p_id).val = n;
-                document.getElementById("sum" + p_id).innerHTML = sum;
-                document.getElementById("tot").innerHTML = total;
+                // updatecartwindow();
+                document.getElementById("n" + p_id).innerHTML = n;
+                document.getElementById("sum" + p_id).innerHTML = sum+" ₽";
+                document.getElementById("tot").innerHTML = total +" ₽";
                 // document.getElementById("del-total").innerHTML = total+" ₽";
                 setCookie("cart_sum", total, 7);
+                updateprice();
 
             }
             break;
@@ -219,6 +224,7 @@ function updatecart() {
             if (document.getElementById("cart-list") != null) {
                 document.getElementById("cart-list").innerHTML = xmlhttp.responseText;
                 // document.getElementById("del-total").innerHTML = getCookie("cart_sum") + " ₽";
+    updateprice();
 
             }
         }
@@ -232,24 +238,24 @@ function updatecartwindow() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            document.getElementById("cart").innerHTML = xmlhttp.responseText;
+            document.getElementById("cart-window").innerHTML = xmlhttp.responseText;
             updateprice();
         }
     };
     xmlhttp.open("GET", "blocks/buildcartwindow.php", true);
     xmlhttp.send();
-    $('#cart').on('click', '#cart-button', function () {
-        $("#cart-window").toggleClass("open");
+    $('#modal').on('click', '#cart-button', function () {
+        $("body").removeClass("open");
     });
 
 
 }
 
 function updatenumber() {
-
+  if (document.getElementById("cart-number") != null) {
     document.getElementById("cart-number").innerHTML = getCookie(numn);
     // document.getElementById("cart-number-2").innerHTML = getCookie(numn);
-
+  }
     //  document.getElementById"cart-num").innerHTML = getCookie(numn);
 }
 
@@ -300,11 +306,11 @@ function add_product(p_id, number, color, size) {
     updatecartwindow();
     updatenumber();
     updateprice();
-    document.getElementById("push-text").innerHTML = "товар добавлен в корзину";
-    document.getElementById("push").classList.add("open");
-    setTimeout(function () {
-        document.getElementById("push").classList.remove("open");
-    }, 2500);
+    // document.getElementById("push-text").innerHTML = "товар добавлен в корзину";
+    // document.getElementById("push").classList.add("open");
+    // setTimeout(function () {
+    //     document.getElementById("push").classList.remove("open");
+    // }, 2500);
 
 }
 

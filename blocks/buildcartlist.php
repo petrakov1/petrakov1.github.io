@@ -1,7 +1,17 @@
+
+      <div class="">
+         
+        <div class="items">
+         
+                  
+     
+       
 <?php
+
                     include '../connect.php';
                     $json = $_COOKIE["cart"].']';
                     $allsum=0;
+                    $quantity =0;
                     $json = json_decode($json,true);
 if($_COOKIE["cart_number"]>0)
 {
@@ -11,65 +21,88 @@ if($_COOKIE["cart_number"]>0)
                     {
                             $item =  $json[$i];
                             $id=  $item["id"];
-                         $oid=  $item["o_id"];
+                            $oid=  $item["o_id"];
                             $sql = "SELECT * FROM products WHERE idProduct='$id'";
                             $result = $conn->query($sql);
                             if ($result->num_rows > 0) {
-
-                                if ($i > 1)
-                                {
-                                    echo '<hr class="white-back">';
-                                }
-
                                 $row = $result->fetch_assoc();
-                                   $sql1 = "SELECT name FROM images WHERE idProduct=".$id." LIMIT 1";
-                        $result1 = $conn->query($sql1);
-
-                        if ($result1->num_rows > 0) {
-                            $row1 = $result1->fetch_assoc();
-                                echo '<div class="cart-item"><div class="item-info"><img class="thumb" src="images/product/'.$id.'/MQ/'.$row1["name"].'" alt="">';
-
-                        }
-                        else {
-                                echo '<div class="cart-item"><div class="item-info"><img class="thumb thumb-empty" src="" alt="">';
-                            
-                        }
-
-  $price = (int)$row["price"]-(int)$row["discount"];
-                                echo '<p class="title uppercase">';
-                                echo $row["title"];
-                                echo   '</p></div><div class="line"></div><div class="item-qty">';
-                                echo  ' <p class="minus pointer pink" id="1" onclick="add_qty_ajax('.$oid.',-1);">-</p><p class="number" id="n'.$oid.'">';
-                                echo     $item["number"];
-                                echo      '</p><p class="plus pointer pink" id="1" onclick="add_qty_ajax('.$oid.',1);">+</p>';
+                                  $price = (int)$row["price"]-(int)$row["discount"];
                                 $sum = $item["number"]*$price;
                                 $allsum += $sum;
-                                echo '<p class="price"><span id="sum'.$oid.'">'.$sum.'</span> ₽</p></div>';
-                                echo  '<div class="rem"><p>удалить</p><img class="pointer" onclick="remove_product('.$oid.')" src="css/images/close-r.png" alt=""></div>';
-                                echo '</div> ';
+                              $quantity += $item["number"];
+          
+         
+       
+
+                                echo '<item>';
+
+
+                                  $sql1 = "SELECT name FROM images WHERE idProduct=".$id." LIMIT 1";
+                        $result1 = $conn->query($sql1);
+                        if ($result1->num_rows > 0) {
+                            $row1 = $result1->fetch_assoc();
+                                echo '<img class="" src="images/product/'.$id.'/MQ/'.$row1["name"].'" alt="">';
+
+                        }
+                        
+
+                        echo ' 
+                        
+                            <div> 
+                                <div class="flex"> 
+                                  <div>
+                                        <p class="heading">'.$row["title"].'</p>
+                                         <p class="price" id="sum'.$oid.'">
+                                    '.$sum.' ₽
+                                 </p>
+                                 </div>
+                                        <img src="css/images/close.png" alt="" onclick="remove_product('.$oid.');" class="remove">
+                                    
+                                 </div>
+                                 <div class="desc">
+                                     '.$row["description"].'
+                                 </div>
+
+                                 <p class="size">Размер: '.$item["size"].'</p>
+                                 <p class="q">Кол-во:</p>
+                                  <div class="quantity noselect">
+                                  
+                    <p class="number" onclick="add_qty_ajax('.$oid.',-1);" data-number="-1">-</p>
+                    <p id="n'.$oid.'">'.$item["number"].'</p>
+                    <p class="number" onclick="add_qty_ajax('.$oid.',1);" data-number="1">+</p>
+                </div>
+                                 
+                                
+                            </div>
+                            <div class="line"></div>
+                            
+            </item>
+                        
+                          
+                                ';
+                                // }
                             }
                     }
+        
 
-                     echo '<div class="cart-total"><h2 class="uppercase">Итого</h2><div class="line-big"></div>';
 
-              echo ' <p class="sum"><span id="tot">';
-                 echo  $allsum;
-                 echo  '</span> ₽</p> <div class="line-small"></div></div>';
-    echo '<div class="cart-buttons">
-
-               <p class="button button-red" onclick="buy_modal()">Купить</p></div>';
 }
 else {
-        echo "<h2 class='empty'>Пока пусто</h2>";
-
+    echo '<h2 class="empty">Пока пусто</h2>
+      
+    ';
 }
                     $conn->close();
+
 
                 ?>
 
 
-                                       <script>
-                 setCookie("cart_sum",<?php echo $allsum ?>,7);
-                </script>
+   </div>
+        <div class=" prices">
+            <p>Покупки <span id="sub-total"><?php echo $allsum; ?> ₽</span></p>
+            <p>Доставка <span id="del-total">0 ₽</span></p>
+            <h2 id="total"> <?php echo $allsum; ?> ₽</h2>
+            
+        </div>
 
-<!--        <p class="button-white modal-delivery">Добавление доставки</p>         -->

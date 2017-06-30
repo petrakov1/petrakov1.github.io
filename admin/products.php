@@ -16,7 +16,7 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link href="style.css" rel="stylesheet">
-	<link href="../css/fonts/stylesheet.css" rel="stylesheet">
+	<link href="fonts/stylesheet.css" rel="stylesheet">
 
     <script src="../js/jquery-2.1.4.min.js"></script>
 
@@ -43,6 +43,7 @@ function search(str) {
 
    <div id="content">
        <div id="nav">
+             <h1>Товары</h1>
 
            <a href="addproduct.php">Добавить товар</a>
 <!--           <form action="search.php">-->
@@ -53,7 +54,6 @@ function search(str) {
 <!--           </form>-->
 
        </div>
-             <h1>Товары</h1>
 <table id="product-table">
        <thead>
             <td></td>
